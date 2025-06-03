@@ -4,130 +4,48 @@
  */
 package quanlynhanvien;
 
-import java.util.Date;
+
 
 /**
  *
  * @author Admin
  */
-public class NhanVien {
+class NhanVien {
+    private String maNhanVien;
+    private String tenNhanVien;
+    private String phongBan;
+    private String chucVu;
+    private String hoTen;
 
-    private int id;
-    private String nameNV;
-    private Date ngaysinh;
-    private boolean gioitinh;
-    private String CCCD;
-    private Date ngayvaolam;
-    private Date ngayketthuc;
-    private String chucvu;
-    private String diachi;
-    private int SDT;
-    private String ghichu;
-
-    public NhanVien() {
+    public String getHoTen() {
+        return hoTen;
     }
 
-    public NhanVien(int id, String nameNV, Date ngaysinh, boolean gioitinh, String CCCD, Date ngayvaolam, Date ngayketthuc, String chucvu, String diachi, int SDT, String ghichu) {
-        this.id = id;
-        this.nameNV = nameNV;
-        this.ngaysinh = ngaysinh;
-        this.gioitinh = gioitinh;
-        this.CCCD = CCCD;
-        this.ngayvaolam = ngayvaolam;
-        this.ngayketthuc = ngayketthuc;
-        this.chucvu = chucvu;
-        this.diachi = diachi;
-        this.SDT = SDT;
-        this.ghichu = ghichu;
-        
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
     }
 
-    public int getId() {
-        return id;
+    public NhanVien(String hoTen) {
+        this.hoTen = hoTen;
+    }
+    
+    public NhanVien(String maNhanVien, String tenNhanVien, String phongBan, String chucVu) {
+        this.maNhanVien = maNhanVien;
+        this.tenNhanVien = tenNhanVien;
+        this.phongBan = phongBan;
+        this.chucVu = chucVu;
+    }
+    
+    // Getters
+    public String getMaNhanVien() { return maNhanVien; }
+    public String getTenNhanVien() { return tenNhanVien; }
+    public String getPhongBan() { return phongBan; }
+    public String getChucVu() { return chucVu; }
+    
+    @Override
+    public String toString() {
+        return tenNhanVien + " - " + chucVu + " (" + maNhanVien + ")";
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNameNV() {
-        return nameNV;
-    }
-
-    public void setNameNV(String nameNV) {
-        this.nameNV = nameNV;
-    }
-
-    public Date getNgaysinh() {
-        return ngaysinh;
-    }
-
-    public void setNgaysinh(Date ngaysinh) {
-        this.ngaysinh = ngaysinh;
-    }
-
-    public boolean isGioitinh() {
-        return gioitinh;
-    }
-
-    public void setGioitinh(boolean gioitinh) {
-        this.gioitinh = gioitinh;
-    }
-
-    public String getCCCD() {
-        return CCCD;
-    }
-
-    public void setCCCD(String CCCD) {
-        this.CCCD = CCCD;
-    }
-
-    public Date getNgayvaolam() {
-        return ngayvaolam;
-    }
-
-    public void setNgayvaolam(Date ngayvaolam) {
-        this.ngayvaolam = ngayvaolam;
-    }
-
-    public Date getNgayketthuc() {
-        return ngayketthuc;
-    }
-
-    public void setNgayketthuc(Date ngayketthuc) {
-        this.ngayketthuc = ngayketthuc;
-    }
-
-    public String getChucvu() {
-        return chucvu;
-    }
-
-    public void setChucvu(String chucvu) {
-        this.chucvu = chucvu;
-    }
-
-    public String getDiachi() {
-        return diachi;
-    }
-
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
-
-    public int getSDT() {
-        return SDT;
-    }
-
-    public void setSDT(int SDT) {
-        this.SDT = SDT;
-    }
-
-    public String getGhichu() {
-        return ghichu;
-    }
-
-    public void setGhichu(String ghichu) {
-        this.ghichu = ghichu;
-    }
-
+    
 }
