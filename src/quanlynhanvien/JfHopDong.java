@@ -672,74 +672,86 @@ public class JfHopDong extends javax.swing.JFrame {
     }
 // 1. Phương thức load tên nhân viên vào JComboBox
 
-    private void loadTenNhanVien() {
-        try {
-            String sql = "SELECT TenNhanVien FROM Tb_NhanVien ORDER BY TenNhanVien";
-            Connection conn = connection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+   // 1. Load danh sách nhân viên vào ComboBox
+private void loadTenNhanVien() {
+    try {
+        String sql = "SELECT MaNhanVien, TenNhanVien FROM Tb_NhanVien ORDER BY TenNhanVien";
+        Connection conn = connection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
-            cboTennld.removeAllItems();
-            cboTennld.addItem("-- Chọn nhân viên --");
+        cboTennld.removeAllItems();
+        cboTennld.addItem("-- Chọn nhân viên --");
 
-            while (rs.next()) {
-                cboTennld.addItem(rs.getString("TenNhanVien"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi load danh sách nhân viên: " + e.getMessage());
+        while (rs.next()) {
+            String ma = rs.getString("MaNhanVien");
+            String ten = rs.getString("TenNhanVien");
+            cboTennld.addItem(ma + " - " + ten);  // Định dạng: "NV01 - Nguyễn Văn A"
         }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi load danh sách nhân viên: " + e.getMessage());
     }
+}
+
 
 // 2. Phương thức hiển thị thông tin nhân viên khi chọn từ ComboBox
-    private void hienThiThongTinNhanVien() {
-        String tenNV = (String) cboTennld.getSelectedItem();
+   // 2. Hiển thị thông tin nhân viên khi chọn từ ComboBox
+private void hienThiThongTinNhanVien() {
+    String selectedItem = (String) cboTennld.getSelectedItem();
 
-        if (tenNV == null || tenNV.equals("-- Chọn nhân viên --")) {
-            // Reset tất cả label về mặc định
-            lbtennv.setText("...");
-            lbmanv.setText("...");
-            lbthan.setText("...");
-            lbpb.setText("...");
-            lbchucvu.setText("...");
-            lblcb.setText("...");
-            lbngayhh.setText("...");
-            lbngayvl.setText("...");
-            return;
-        }
-
-        String sql = "SELECT TenNhanVien, MaNhanVien, LoaiHD, PhongBan, ChucVu, LuongCoBan, NgayVaoLam "
-                + "FROM Tb_NhanVien WHERE TenNhanVien = ?";
-
-        try (Connection conn = connection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, tenNV);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    lbtennv.setText(rs.getString("TenNhanVien"));
-                    lbmanv.setText(rs.getString("MaNhanVien"));
-                    lbthan.setText(rs.getString("LoaiHD"));
-                    lbpb.setText(rs.getString("PhongBan"));  // Hiển thị mã phòng ban
-                    lbchucvu.setText(rs.getString("ChucVu"));
-                    lblcb.setText(String.valueOf(rs.getInt("LuongCoBan")));
-
-                    // Hiển thị ngày vào làm (định dạng theo dd/MM/yyyy nếu muốn)
-                    java.sql.Date ngayVaoLam = rs.getDate("NgayVaoLam");
-                    if (ngayVaoLam != null) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        lbngayvl.setText(sdf.format(ngayVaoLam));
-                    } else {
-                        lbngayvl.setText("...");
-                    }
-
-                    // Gọi phương thức tính ngày hết hạn hợp đồng
-                    tinhNgayHetHan();
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhân viên: " + e.getMessage());
-        }
+    if (selectedItem == null || selectedItem.equals("-- Chọn nhân viên --")) {
+        // Reset tất cả label về mặc định
+        lbtennv.setText("...");
+        lbmanv.setText("...");
+        lbthan.setText("...");
+        lbpb.setText("...");
+        lbchucvu.setText("...");
+        lblcb.setText("...");
+        lbngayhh.setText("...");
+        lbngayvl.setText("...");
+        return;
     }
+
+    // Tách MaNhanVien từ chuỗi "NV01 - Nguyễn Văn A"
+    String[] parts = selectedItem.split(" - ");
+    if (parts.length < 1) return;
+    String maNV = parts[0];
+
+    String sql = "SELECT TenNhanVien, MaNhanVien, LoaiHD, PhongBan, ChucVu, LuongCoBan, NgayVaoLam "
+               + "FROM Tb_NhanVien WHERE MaNhanVien = ?";
+
+    try (Connection conn = connection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, maNV);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                lbtennv.setText(rs.getString("TenNhanVien"));
+                lbmanv.setText(rs.getString("MaNhanVien"));
+                lbthan.setText(rs.getString("LoaiHD"));
+                lbpb.setText(rs.getString("PhongBan"));  // hoặc bạn có thể truy vấn để lấy tên phòng ban nếu cần
+                lbchucvu.setText(rs.getString("ChucVu"));
+                lblcb.setText(String.valueOf(rs.getInt("LuongCoBan")));
+
+                // Hiển thị ngày vào làm
+                java.sql.Date ngayVaoLam = rs.getDate("NgayVaoLam");
+                if (ngayVaoLam != null) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    lbngayvl.setText(sdf.format(ngayVaoLam));
+                } else {
+                    lbngayvl.setText("...");
+                }
+
+                // Gọi hàm tính ngày hết hạn hợp đồng
+                tinhNgayHetHan(); // Giả định hàm này đã dùng đúng lbngayvl
+            }
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhân viên: " + e.getMessage());
+    }
+}
 
     // 3. Phương thức tính ngày hết hạn dựa trên loại hợp đồng
     private void tinhNgayHetHan() {

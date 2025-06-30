@@ -1,0 +1,21 @@
+=== BÁO CÁO THỐNG KÊ TỔNG HỢP ===
+Ngày tạo: 04/06/2025 02:52:18
+
+1. THỐNG KÊ TỔNG QUAN:
+   - Tổng số nhân viên: 8
+   - Tổng số phòng ban: 2
+   - Tổng số hợp đồng: 3
+   - Tổng số bảng lương: 2
+
+2. PHÂN TÍCH:
+   - Tỷ lệ nhân viên/phòng ban: 4.00
+   - Tỷ lệ hợp đồng/nhân viên: 0.38
+
+3. GHI CHÚ:
+   - Dữ liệu được thống kê tại thời điểm tạo báo cáo
+   - Các số liệu có thể thay đổi theo thời gian
+   - Liên hệ bộ phận IT để được hỗ trợ thêm
+
+4. KHUYẾN NGHỊ:
+   - Nên cập nhật dữ liệu định kỳ
+   - Backup dữ liệu thường xuyên

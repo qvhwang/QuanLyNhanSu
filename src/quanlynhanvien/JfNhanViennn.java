@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -361,7 +361,7 @@ public class JfNhanViennn extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(158, 158, 158)
                                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(43, 43, 43))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1070,8 +1070,13 @@ public class JfNhanViennn extends javax.swing.JFrame {
             thongBao += "Vui lòng nhập Số điện thoại!\n";
         }
         if (ngayvaolam == null) {
-            thongBao += "Vui lòng chọn Ngày vào làm!\n";
+        thongBao += "Vui lòng chọn Ngày vào làm!\n";
+    } else {
+        java.util.Date ngayHienTai = new java.util.Date();
+        if (ngayvaolam.after(ngayHienTai)) {
+            thongBao += "Ngày vào làm không được lớn hơn ngày hiện tại!\n";
         }
+    }
         if (phongban == null || phongban.isEmpty()) {
             thongBao += "Vui lòng chọn Phòng ban!\n";
         }
@@ -1081,9 +1086,9 @@ public class JfNhanViennn extends javax.swing.JFrame {
         if (lcb.isEmpty()) {
             thongBao += "Vui lòng nhập Lương cơ bản!\n";
         }
-        if (loaihd == null || loaihd.isEmpty()) {
-            thongBao += "Vui lòng chọn Loại hợp đồng!\n";
-        }
+          if (loaihd == null || loaihd.isEmpty() || loaihd.equalsIgnoreCase("None")) {
+        thongBao += "Vui lòng chọn Loại hợp đồng hợp lệ!\n";
+    }
 
         // Kiểm tra CCCD là số và không âm
         if (!cccd.isEmpty()) {
@@ -1169,7 +1174,7 @@ public class JfNhanViennn extends javax.swing.JFrame {
             // Kết nối database
             String url = "jdbc:sqlserver://localhost:1433;databaseName=nhansucongty;encrypt=true;trustServerCertificate=true";
             String username = "sa"; // Thay đổi theo thông tin của bạn
-            String password = "123456"; // Thay đổi theo thông tin của bạn
+            String password = "123"; // Thay đổi theo thông tin của bạn
 
             Connection conn = DriverManager.getConnection(url, username, password);
             String sql = "SELECT MaPB, TenPB FROM Tb_PhongBan ORDER BY TenPB";

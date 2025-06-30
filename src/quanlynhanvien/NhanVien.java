@@ -17,9 +17,6 @@ class NhanVien {
     private String chucVu;
     private String hoTen;
 
-    public String getHoTen() {
-        return hoTen;
-    }
 
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
@@ -45,6 +42,11 @@ class NhanVien {
     @Override
     public String toString() {
         return tenNhanVien + " - " + chucVu + " (" + maNhanVien + ")";
+    }
+
+
+    String getHoTen() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

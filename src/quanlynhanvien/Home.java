@@ -311,7 +311,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbcActionPerformed
-        quanlynhanvien.JfBaoCaoHD bc = new JfBaoCaoHD();
+        quanlynhanvien.BaoCaoThongKe bc = new BaoCaoThongKe();
         bc.show();
         this.dispose();
     }//GEN-LAST:event_btnbcActionPerformed
